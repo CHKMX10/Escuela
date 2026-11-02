@@ -1,0 +1,13 @@
+services:
+  services:
+    escuela-app:
+      image: escuela-app:latest
+      build: .
+      container_name: escuela-app
+      environment:
+        PORT: ${PORT}
+        DB_URL: ${DB_URL_DOCKER}
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+      ports:
+        - "${PORT}:${PORT}"#lado izquierdo mi puerto derecho de docker
