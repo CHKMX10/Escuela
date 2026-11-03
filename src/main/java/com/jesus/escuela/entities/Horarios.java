@@ -21,11 +21,11 @@ public class Horarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_HORARIO")
-    private Long idHorario;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_GRUPO", nullable = false)
-    private Grupos idGrupo;
+    private Grupos grupo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "DIA", nullable = false)

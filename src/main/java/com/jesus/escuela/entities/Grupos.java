@@ -1,11 +1,17 @@
 package com.jesus.escuela.entities;
 
+import com.jesus.escuela.utils.StringCustomUtils;
+import com.jesus.escuela.utils.ValoresNumericosUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 * CUANDO SON MUCHAS RELACIONES CON LLAVES FORANEAS Y UNICAS
@@ -25,7 +31,7 @@ public class Grupos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_GRUPO")
-    private Long idGrup;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CURSO", nullable = false)
@@ -42,7 +48,38 @@ public class Grupos {
     @Column(name = "PERIODO", length = 20, unique = true)
     private String periodo;
 
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "grupo")
+    private List<Horarios> horarios = new ArrayList<>();
 
+
+    private static void validarDatos(String periodo){
+        StringCustomUtils.validarTamanio(periodo, 8, 20, "El peridodo debe tener entre 8 y 20 caracteres");
+    }
+
+    public void actualizar(Cursos cursos, Maestros maestros,
+                           Aulas aulas, String periodo) {
+
+        validarDatos(periodo);
+
+        this.cursos = cursos;
+        this.maestro = maestros;
+        this.aulas = aulas;
+        this.periodo = periodo.trim();
+    }
+
+    public static Grupos crear(Cursos cursos, Maestros maestros,
+                         Aulas aulas, String periodo){
+
+        validarDatos(periodo);
+
+        return Grupos.builder()
+                .cursos(cursos)
+                .maestro(maestros)
+                .aulas(aulas)
+                .periodo(periodo.trim())
+                .build();
+    }
 
 
 }

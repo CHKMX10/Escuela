@@ -29,7 +29,6 @@ public enum DiaSem {
                     .equalsIgnoreCase(descripcionNormalizada))
                 return diaSem;
         }
-
         throw new RecursoNoEncontradoException("No existe un dia de la semana con la descripcion" + descripcion);
     }
 

@@ -1,5 +1,6 @@
 package com.jesus.escuela.entities;
 
+import com.jesus.escuela.utils.StringCustomUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +37,7 @@ public class Inscripcion {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_GRUPO", nullable = false)
-    private Grupos idGrupo;
+    private Grupos grupo;
 
     @Builder.Default
     @Column(name = "FECHA_INSCRIPCION")
@@ -44,5 +45,6 @@ public class Inscripcion {
 
     @OneToOne(mappedBy = "inscripcion")
     private Calificaciones calificaciones;
+
 
 }

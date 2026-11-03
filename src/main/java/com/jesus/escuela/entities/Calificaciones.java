@@ -21,7 +21,7 @@ public class Calificaciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_CALIFICACION")
-    private Long idCalificacion;
+    private Long id;
 
     @Column(name = "CALIFICACION", nullable = false)
     private BigDecimal calificacion;
