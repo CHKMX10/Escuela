@@ -46,14 +46,28 @@ public class Cursos {
         this.creditos = creditos;
 
     }
-
+    public boolean cambioEnDatos(String nombre, String descripcion, Integer creditos) {
+        String desActual = this.descripcion !=null
+                ?
+                this.descripcion
+                : "";
+        String descNueva = descripcion != null
+                ?
+                descripcion : "";
+        return !this.nombre.equals(nombre) ||
+                !desActual.equals(descNueva)||
+                !this.creditos.equals(creditos);
+    }
     public static Cursos crear(String nombre, String descripcion, Integer creditos){
 
         validarDatos(nombre, descripcion, creditos);
 
         return Cursos.builder()
                 .nombre(nombre.trim())
-                .descripcion(descripcion.trim())
+                .descripcion(descripcion != null
+                        ?
+                        descripcion.trim()
+                        : null)
                 .creditos(creditos)
                 .build();
     }

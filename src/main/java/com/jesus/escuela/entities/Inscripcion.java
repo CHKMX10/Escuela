@@ -29,7 +29,7 @@ public class Inscripcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_INSCRIPCION")
-    private Long idInscripciones;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_ALUMNO", nullable = false)
@@ -46,5 +46,16 @@ public class Inscripcion {
     @OneToOne(mappedBy = "inscripcion")
     private Calificaciones calificaciones;
 
+    public static Inscripcion crear(Alumnos alumno, Grupos grupo) {
+        return Inscripcion.builder()
+                .alumno(alumno)
+                .grupo(grupo)
+                .fechaInscripcion(LocalDate.now())
+                .build();
+    }
+    public void actualizar(Alumnos alumno, Grupos grupo) {
+        this.alumno = alumno;
+        this.grupo = grupo;
+    }
 
 }

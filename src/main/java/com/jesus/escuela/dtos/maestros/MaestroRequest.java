@@ -31,7 +31,7 @@ public record MaestroRequest(
 
     @Schema(description = "Numero de telefono", example = "1234567890")
     @NotBlank(message = "El numero es requerido")
-    @Size(min = 10, max = 10, message = "El nombre debe tener entre 10 y 10 caracteres")
+    @Size(min = 10, max = 10, message = "El nombre debe tener 10 caracteres")
     String telefono
 
 ){}

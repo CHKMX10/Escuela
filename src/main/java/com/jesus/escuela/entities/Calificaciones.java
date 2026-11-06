@@ -34,4 +34,32 @@ public class Calificaciones {
     @JoinColumn(name = "ID_INSCRIPCION", nullable = false, unique = true)
     private Inscripcion inscripcion;
 
+    public static Calificaciones crear(Inscripcion inscripcion, BigDecimal calificacion) {
+
+        if (inscripcion == null) {
+            throw new IllegalArgumentException("La inscripción es requerida");
+        }
+        if (calificacion == null) {
+            throw new IllegalArgumentException("La calificación es requerida");
+        }
+
+        return Calificaciones.builder()
+                .inscripcion(inscripcion)
+                .calificacion(calificacion)
+                .fechaIngreso(LocalDate.now())
+                .build();
+    }
+
+    public void actualizar(Inscripcion inscripcion, BigDecimal calificacion) {
+
+        if (inscripcion == null) {
+            throw new IllegalArgumentException("La inscripción es requerida");
+        }
+        if (calificacion == null) {
+            throw new IllegalArgumentException("La calificación es requerida");
+        }
+
+        this.inscripcion = inscripcion;
+        this.calificacion = calificacion;
+    }
 }

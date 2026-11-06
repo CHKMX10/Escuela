@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,6 @@ import java.util.List;
 @ApiResponse(responseCode = "500", description = "Error interno del servidor",
         content = @Content(mediaType = "application/problem+json",
                 schema = @Schema(implementation = ProblemaDocs.class)))
-
 public class CrudController<RQ , RS , S extends CrudService<RQ , RS>> {//clase generica s es service
 
     protected final S service;//protected lo usa su hijo
@@ -38,18 +38,17 @@ public class CrudController<RQ , RS , S extends CrudService<RQ , RS>> {//clase g
     @ApiResponse(responseCode = "200" , description = "Listado obtenido")
     public ResponseEntity<List<RS>> listar(){
         return ResponseEntity.ok(service.listar());
-
     }
 
     @GetMapping("/{id}")//CONSULTA POR MEDIO DEL ID
-    @Operation(summary = "Registro por ID")
+    @Operation(summary = "Consulta por ID")
     @ApiResponse(responseCode = "200", description = "Registro encontrado")
     @ApiResponse(responseCode = "404", description = "El registro no existe",
             content = @Content(mediaType = "application/problem+json",
                     schema = @Schema(implementation = ProblemaDocs.class)))
     public ResponseEntity<RS> obtenerPorId(
 
-            @Parameter(description = "Id del producto", example = "1")
+            @Parameter(description = "Id del registro", example = "1")
             @PathVariable @Positive(message = "El ID debe ser psoitivo") Long id
 
     ){
@@ -57,7 +56,7 @@ public class CrudController<RQ , RS , S extends CrudService<RQ , RS>> {//clase g
     }
 
     @PostMapping//CREACION POR MEDIO DE INSERCION
-    @Operation(summary = "Agregar productos", description = "Agregar los productos en la DB")
+    @Operation(summary = "Agregar registro", description = "Agregar los registros en la DB")
     @ApiResponse(responseCode = "201", description = "Resgistro exitoso")
     @ApiResponse(responseCode = "409", description = "Conflicto con datos existentes",
             content = @Content(mediaType = "application/problem+json",
@@ -73,14 +72,14 @@ public class CrudController<RQ , RS , S extends CrudService<RQ , RS>> {//clase g
 
     @PutMapping("/{id}")//
     @Operation(summary = "Actualizar", description = "Actualizar un registro")
-    @ApiResponse(responseCode = "200", description = "Producto actualizado")
+    @ApiResponse(responseCode = "200", description = "Registro actualizado")
     @ApiResponse(responseCode = "404", description = "El registro no existe",
             content = @Content(mediaType = "application/problem+json",
                     schema = @Schema(implementation = ProblemaDocs.class)))
     public ResponseEntity<RS> actualizar(
 
-            @Parameter(description = "Id del producto", example = "1")
-            @PathVariable @Positive (message = "El ID debe ser psoitivo") Long id,
+            @Parameter(description = "Id del registrp", example = "1")
+            @PathVariable @Positive (message = "El ID debe ser positivo") Long id,
 
             @Valid @RequestBody RQ request
     ){
@@ -98,8 +97,8 @@ public class CrudController<RQ , RS , S extends CrudService<RQ , RS>> {//clase g
                     schema = @Schema(implementation = ProblemaDocs.class)))
 
     public ResponseEntity<Void> eliminar(
-            @Parameter(description = "Id del producto", example = "1")
-            @PathVariable @Positive (message = "El ID debe ser psoitivo") Long id
+            @Parameter(description = "Id del registro", example = "1")
+            @PathVariable @Positive (message = "El ID debe ser positivo") Long id
     ){
         service.eliminar(id);
 

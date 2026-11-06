@@ -16,6 +16,8 @@ public static void validarRangoPrecios(BigDecimal precioMin, BigDecimal precioMa
         throw new DatoInvalidoException("El precio mínimo no puede ser mayor que el precio máximo");
 }
 
+
+
 public static void validarEnteroPositivo( Integer numero, String mensaje){
 
     validarNumeroRequerido(numero, mensaje);

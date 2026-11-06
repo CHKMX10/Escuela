@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table( name = "AULAS" )
@@ -29,10 +31,14 @@ public class Aulas {
     @Column(name = "CAPACIDAD", length = 4, nullable = false)
     private Integer capacidad;
 
+    @Builder.Default
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aulas")
+    private List<Grupos> grupos = new ArrayList<>();
+
     private static void validarDatos(String nombre, Integer capacidad){
 
-        StringCustomUtils.validarTamanio(nombre, 5, 50, "El nombre es requerido y debe contener entre 5 y 30 caracteres");
-        ValoresNumericosUtils.validarEnteroPositivo(capacidad, "La capacidad debe contener 4 caracteres");
+        StringCustomUtils.validarTamanio(nombre, 5, 30, "El nombre es requerido y debe contener entre 5 y 30 caracteres");
+        ValoresNumericosUtils.validarEnteroPositivo(capacidad, "La capacidad debe ser un número positivo");
     }
 
     public void actualizar(String nombre, Integer capacidad) {
@@ -41,7 +47,6 @@ public class Aulas {
 
         this.nombre = nombre.trim();
         this.capacidad = capacidad;
-
     }
 
     public static Aulas crear(String nombre, Integer capacidad){
@@ -52,5 +57,14 @@ public class Aulas {
                 .nombre(nombre.trim())
                 .capacidad(capacidad)
                 .build();
+    }
+
+    public boolean cambioEnDatos(String nombre, Integer capacidad) {
+
+        validarDatos(nombre, capacidad);
+
+        return !this.nombre.equals(nombre) ||
+                !this.capacidad.equals(capacidad);
+
     }
 }

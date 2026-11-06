@@ -16,11 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
-@Slf4j
 public class MaestroServiceImpl implements MaestroService {
 
     private final MaestrosRepository maestrosRepository;
@@ -42,6 +41,8 @@ public class MaestroServiceImpl implements MaestroService {
     @Override
     //@Transactional(readOnly = true)
     public MaestroResponse obtenerPorId(Long id) {
+        log.info("Listando maestro por ID: {}", id);
+
         return maestroMapper.entidadAResponse(obtenerMaestro(id));
     }
 
