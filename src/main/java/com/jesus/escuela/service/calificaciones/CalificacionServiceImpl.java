@@ -61,11 +61,11 @@ public class CalificacionServiceImpl implements CalificacionService{
         Calificaciones calificacion =
                 calificacionMapper.requestAEntidad(request, inscripcion);
 
-        Calificaciones guardada =
-                calificacionRepository.saveAndFlush(calificacion);
+        calificacionRepository.saveAndFlush(calificacion);
+
         log.info("Calificaciones registradas");
 
-        return calificacionMapper.entidadAResponse(guardada);
+        return calificacionMapper.entidadAResponse(calificacion);
     }
 
     @Override

@@ -61,12 +61,9 @@ public class InscripcionesServiceImpl implements InscripcionesService{
         Inscripcion inscripcion =
                 inscripcionMapper.requestAEntidad(request, alumno, grupo);
 
-        Inscripcion guardada =
-                inscripcionRepository.saveAndFlush(inscripcion);
-
         log.info("Inscripcion registrada");
 
-        return inscripcionMapper.entidadAResponse(guardada);    }
+        return inscripcionMapper.entidadAResponse(inscripcion);    }
 
     @Override
     public InscripcionResponse actualizar(InscripcionRequest request, Long id) {
@@ -80,11 +77,11 @@ public class InscripcionesServiceImpl implements InscripcionesService{
 
         inscripcion.actualizar(alumno, grupo);
 
-        Inscripcion actualizada =
-                inscripcionRepository.saveAndFlush(inscripcion);
+        inscripcionRepository.saveAndFlush(inscripcion);
+
         log.info("Inscripcion actualizada");
 
-        return inscripcionMapper.entidadAResponse(actualizada);
+        return inscripcionMapper.entidadAResponse(inscripcion);
     }
 
     @Override

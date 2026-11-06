@@ -2,8 +2,12 @@ package com.jesus.escuela.mappers;
 
 import com.jesus.escuela.dtos.calificaciones.CalificacionResponse;
 import com.jesus.escuela.dtos.calificaciones.CalificacionesRequest;
+import com.jesus.escuela.dtos.datos.DatosAlumnoInscripcion;
+import com.jesus.escuela.dtos.datos.DatosGrupoHorario;
 import com.jesus.escuela.dtos.datos.DatosInscripcionCalificacion;
+import com.jesus.escuela.entities.Alumnos;
 import com.jesus.escuela.entities.Calificaciones;
+import com.jesus.escuela.entities.Grupos;
 import com.jesus.escuela.entities.Inscripcion;
 import com.jesus.escuela.utils.StringCustomUtils;
 import org.springframework.stereotype.Component;
@@ -30,11 +34,31 @@ public class CalificacionesMapper implements CommonMapper<CalificacionesRequest,
 
         Inscripcion inscripcion = entidad.getInscripcion();
 
+        Alumnos alumno = inscripcion.getAlumno();
+
+        Grupos grupo = inscripcion.getGrupo();
+
+        DatosAlumnoInscripcion datosAlumno = new DatosAlumnoInscripcion(
+                alumno.obtenerNombreCompleto(),
+                alumno.getMatricula(),
+                alumno.getEmail(),
+                StringCustomUtils.localDateAString(alumno.getDateIngreso())
+        );
+
+        DatosGrupoHorario datosGrupo = new DatosGrupoHorario(
+                grupo.getCursos().getNombre(),
+                grupo.getMaestro().obtenerNombreCompleto(),
+                grupo.getAulas().getNombre(),
+                grupo.getPeriodo()
+        );
+
         DatosInscripcionCalificacion datosInscripcion =
                 new DatosInscripcionCalificacion(
-                        inscripcion.getAlumno().obtenerNombreCompleto(),
-                        inscripcion.getGrupo().getCursos().getNombre(),
-                        inscripcion.getGrupo().getPeriodo()
+                        datosAlumno,
+                        datosGrupo,
+                        StringCustomUtils.localDateAString(
+                                inscripcion.getFechaInscripcion()
+                        )
                 );
 
         return new CalificacionResponse(

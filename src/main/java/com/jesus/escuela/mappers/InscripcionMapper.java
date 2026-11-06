@@ -29,8 +29,6 @@ public class InscripcionMapper implements CommonMapper<InscripcionRequest, Inscr
 
     @Override
     public Inscripcion requestAEntidad(InscripcionRequest request) {
-        // El service debe usar la sobrecarga que recibe
-        // el alumno y el grupo ya consultados.
         return null;
     }
 

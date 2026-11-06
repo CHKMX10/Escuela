@@ -46,6 +46,7 @@ public class Cursos {
         this.creditos = creditos;
 
     }
+
     public boolean cambioEnDatos(String nombre, String descripcion, Integer creditos) {
         String desActual = this.descripcion !=null
                 ?
@@ -58,6 +59,7 @@ public class Cursos {
                 !desActual.equals(descNueva)||
                 !this.creditos.equals(creditos);
     }
+
     public static Cursos crear(String nombre, String descripcion, Integer creditos){
 
         validarDatos(nombre, descripcion, creditos);

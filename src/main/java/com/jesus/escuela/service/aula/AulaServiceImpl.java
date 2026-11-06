@@ -113,8 +113,6 @@ public class AulaServiceImpl implements AulaService {
         log.info("Aula con id: {} eliminada", id);
     }
 
-
-
     private void validarDatosUnicos(AulasRequest request){
         log.info("Validando nombre único");
 
@@ -127,15 +125,8 @@ public class AulaServiceImpl implements AulaService {
         log.info("Validando nombre único");
         String nombreTrim = request.nombre().trim();
 
-        boolean existe;
-        if(id == null){
-            existe = aulaRepository.existsByNombreIgnoreCase(nombreTrim);
-        }else {
-            existe = aulaRepository.existsByNombreIgnoreCaseAndIdNot(nombreTrim , id);
-        }
-        if (existe){
-            throw new ConflictoException("Ya existe otra aula con el nombre: " + request.nombre());
-        }
+        if (aulaRepository.existsByNombreIgnoreCase(request.nombre().trim()))
+            throw new ConflictoException("Ya existe un aula con el nombre: "+request.nombre());
     }
     private Aulas obtenerAulas(Long id){
         return ServiceUtils.obtenerEntidadOException(aulaRepository, id, Aulas.class);

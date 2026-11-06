@@ -111,17 +111,9 @@ public class CursoServiceImpl implements CursoService {
     }
     private void validarCambiosUnicos(CursoRequest request, Long id) {
         log.info("Validando curso único");
-        String nombreTrim = request.nombre().trim();
 
-        boolean existe;
-        if(id == null){
-            existe = cursoRepository.existsByNombreIgnoreCase(nombreTrim);
-        }else {
-            existe = cursoRepository.existsByNombreIgnoreCaseAndIdNot(nombreTrim , id);
-        }
-        if (existe){
-            throw new ConflictoException("Ya existe otra aula con el nombre: " + request.nombre());
-        }
+        if (cursoRepository.existsByNombreIgnoreCase(request.nombre().trim()))
+            throw new ConflictoException("Ya existe un aula con el nombre: "+request.nombre());
     }
     private void validarDatosUnicos(CursoRequest request){
         log.info("Validando nombre único");
